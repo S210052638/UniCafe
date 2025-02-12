@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Cafeteria - Product Listing</title>  
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>University Cafeteria</h1>
+            <h2>Food & Beverage</h2>
+        </div>
+
+            <!-- catagoris-->
+        <div class="product-browsing">
+            <h3>Product Browsing</h3>
+            <div class="product-categories">
+                <a href="#" class="category" data-category="all">All</a>
+                <a href="#" class="category" data-category="drinks">Drinks</a>
+                <a href="#" class="category" data-category="desserts">Desserts</a>
+                <a href="#" class="category" data-category="meals">Meals</a>
+                <a href="#" class="category" data-category="others">Others</a>
+            </div>
+            <!-- search -->  
+            <div class="search-container">
+                <input type="text" placeholder="Search products..." id="searchInput">
+                <button type="button" id="searchButton">Search</button>
+            </div>
+        </div>
+        
+
+            <!---------------Product Coffee------------->
+        <div class="product-grid" id="productGrid">
+            <div class="product-card" data-category="drinks">
+                <img src="pic\coffee.jpg" alt="Coffee" class="product-image">
+                <h3>Coffee</h3>
+                <p class="product-description">Freshly brewed coffee</p>
+                <p class="price">SAR 17.99</p>
+                <a href="productdetailsetails.html?product=coffee" class="more-info">More Info</a>
+            </div>
+            
+            <!---------------Product Fresh Juice------------->
+            <div class="product-card" data-category="drinks">
+                <img src="pic/fresh-juices.jpg" alt="Fresh Juice" class="product-image">
+                <h3>Fresh Juice</h3>
+                <p class="product-description">Fresh fruit blend</p>
+                <p class="price">SAR 15.99</p>
+                <a href="Product Details Page.html?product=juice" class="more-info">More Info</a>
+            </div>
+            
+            <!---------------Product croissant------------->
+            <div class="product-card" data-category="desserts">
+                <img src="pic/croissant.jpg" alt="Croissant" class="product-image">
+                <h3>Croissant</h3>
+                <p class="product-description">Flaky French croissant</p>
+                <p class="price">SAR 11.99</p>
+                <a href="Product Details Page.html?product=croissant" class="more-info">More Info</a>
+            </div>
+            
+            <!---------------Product cookies------------->
+            <div class="product-card" data-category="desserts">
+                <img src="pic/cookies.jpg" alt="Cookies" class="product-image">
+                <h3>Cookies</h3>
+                <p class="product-description">Assorted cookies</p>
+                <p class="price">SAR 7.99</p>
+                <a href="Product Details Page.html?product=cookies" class="more-info">More Info</a>
+            </div>
+            
+            <!---------------Product sandwich------------->
+            <div class="product-card" data-category="meals">
+                <img src="pic/sandwich.jpg" alt="Classic Sandwich" class="product-image">
+                <h3>Sandwich</h3>
+                <p class="product-description">Toasted bread with fresh ingredients</p>
+                <p class="price">SAR 14.99</p>
+                <a href="Product Details Page.html?product=sandwich" class="more-info">More Info</a>
+            </div>
+           
+            <!---------------Product shawarma------------->
+            <div class="product-card" data-category="meals">
+                <img src="pic/shawarma.jpg" alt="Shawarma" class="product-image">
+                <h3>Shawarma</h3>
+                <p class="product-description">Classic chicken shawarma</p>
+                <p class="price">SAR 19.99</p>
+                <a href="Product Details Page.html?product=shawarma" class="more-info">More Info</a>
+            </div>
+        </div>
+    </div>
+
+<!-- Java Script-->
+    <script>
+        
+        // Event listeners for category filtering
+        document.querySelectorAll('.category').forEach(category => {
+            category.addEventListener('click', (e) => {
+                e.preventDefault();
+                const selectedCategory = category.getAttribute('data-category');
+                filterProducts(selectedCategory);
+            });
+        });
+        
+        // Event listener for search
+        document.getElementById('searchButton').addEventListener('click', searchProducts);
+
+        // Filter products by category
+        function filterProducts(category) {
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach(card => {
+                const cardCategory = card.getAttribute('data-category');
+                card.style.display = category === 'all' ? 'block' : 
+                                    cardCategory === category ? 'block' : 'none';
+            });
+        }
+
+        // Search products
+        function searchProducts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach(card => {
+                const productName = card.querySelector('h3').textContent.toLowerCase();
+                if (productName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
