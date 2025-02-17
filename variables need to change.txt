@@ -1,0 +1,71 @@
+To help you understand which variables need to be changed in your PHP files, let's go through each file and identify the placeholders or variables that should be customized to match your application's configuration.
+
+1. `mailer.php`
+This file configures the email sending functionality using PHPMailer. The variables here need to be updated with your actual email and SMTP settings.
+
+ `$mail>Host = "smtp.example.com";`
+   Change to: The SMTP server address of your email provider (e.g., "smtp.gmail.com").
+  
+ `$mail>Username = "youruser@example.com";`
+   Change to: Your actual email address or SMTP username.
+  
+ `$mail>Password = "yourpassword";`
+   Change to: Your actual email password or an appspecific password (depending on your email provider).
+  
+Example (for Gmail):
+```php
+$mail>Host = "smtp.gmail.com";
+$mail>Username = "yourgmail@example.com";
+$mail>Password = "yourgmailpassword";
+```
+
+ 2. `processresetpassword.php`
+This file processes the password reset after the user submits a new password. Ensure that any databaserelated variables match your actual database schema.
+
+ Column names and table name:
+   Check if your database uses `users` as the table name for storing user data.
+   Ensure that columns like `reset_token_hash` and `reset_token_expires_at` exist in your table.
+
+ 3. `resetpassword.php`
+This file displays the password reset form. The form_action URL should point to the correct processing script.
+
+ `<form method="post" action="processresetpassword.php">`
+   Ensure the `action` URL matches the location of your `processresetpassword.php` file.
+
+ 4. `sendpasswordreset.php`
+This file sends the password reset email to the user. Again, ensure databaserelated variables match your schema.
+
+ Column names and table name:
+   Check if your table is named `users` and has columns `reset_token_hash` and `reset_token_expires_at`.
+
+ `$book rowsidue checking` (if applicable):
+   Ensure any error messages or redirects are correctly formatted and match your application’s flow.
+
+ General Variables to Customize:
+
+ Email Content:
+   The email body in `sendpasswordreset.php`:
+    ```php
+    $mail>Body = <<<END
+    Click <a href="http://example.com/resetpassword.php?token=$token">here</a> 
+    to reset your password.
+    END;
+    ```
+     Change: Replace "http://example.com/resetpassword.php" with your actual application URL.
+
+ Error Messages:
+   Modify any error messages to match your application's tone and requirements.
+
+ Conclusion:
+The variables that need to be changed are typically related to your email configuration and database schema. Here’s a summary of changes:
+
+ `mailer.php`:
+   SMTP Host, Username, and Password.
+  
+ All files:
+   Ensure database table and column names match your schema.
+  
+ `sendpasswordreset.php`:
+   Update the reset link in the email body to your application's actual URL.
+
+By carefully updating these variables, you ensure that your password reset functionality works seamlessly with your application's setup.
