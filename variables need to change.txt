@@ -1,1 +1,10 @@
+The variables that need to be changed:
 
+1. mailer.php:
+SMTP Host, Username, and Password.
+
+2.All files:
+Ensure database table and column names match your schema.
+
+3.send-password-reset.php:
+Update the reset link in the email body to your application's actual URL.
