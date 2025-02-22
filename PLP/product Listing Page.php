@@ -80,8 +80,48 @@ $result = $conn->query($sql);
         </div>
     </div>
 
-    <!-- JavaScript -->
+   <!-- JavaScript -->
     <script>
+        // Function to resize images in the product grid
+        function resizeImages() {
+            const productCards = document.querySelectorAll('.product-card');
+            const targetWidth = 200; // Set your desired width
+            const targetHeight = 200; // Set your desired height
+
+            productCards.forEach(card => {
+                const img = card.querySelector('img');
+                // Calculate the aspect ratio
+                const aspectRatio = img.naturalWidth / img.naturalHeight;
+                // Add event listener for image load to ensure dimensions are correct
+                img.addEventListener('load', function() {
+                    if (this.naturalWidth > targetWidth || this.naturalHeight > targetHeight) {
+                        // Adjust dimensions while maintaining aspect ratio
+                        if (aspectRatio > 1) {
+                            this.width = targetWidth;
+                            this.height = this.width / aspectRatio;
+                            if (this.height > targetHeight) {
+                                this.height = targetHeight;
+                                this.width = this.height * aspectRatio;
+                            }
+                        } else {
+                            this.height = targetHeight;
+                            this.width = this.height * aspectRatio;
+                            if (this.width > targetWidth) {
+                                this.width = targetWidth;
+                                this.height = this.width / aspectRatio;
+                            }
+                        }
+                    }
+                });
+            });
+        }
+
+        // Event listener to trigger image resizing after DOM content loads
+        document.addEventListener('DOMContentLoaded', resizeImages);
+
+        // Event listener for window resize to adjust images when the window size changes
+        window.addEventListener('resize', resizeImages);
+
         // Event listeners for category filtering
         document.querySelectorAll('.category').forEach(category => {
             category.addEventListener('click', (e) => {
@@ -90,7 +130,7 @@ $result = $conn->query($sql);
                 filterProducts(selectedCategory);
             });
         });
-        
+
         // Event listener for search
         document.getElementById('searchButton').addEventListener('click', searchProducts);
 
@@ -123,6 +163,8 @@ $result = $conn->query($sql);
                 const cardCategory = card.getAttribute('data-category');
                 card.style.display = category === 'all' ? 'block' :
                                     cardCategory === category ? 'block' : 'none';
+                // Trigger resize after filtering to ensure images adjust
+                setTimeout(() => resizeImages(), 100);
             });
         }
 
@@ -137,6 +179,8 @@ $result = $conn->query($sql);
                 } else {
                     card.style.display = 'none';
                 }
+                // Trigger resize after search to ensure images adjust
+                setTimeout(() => resizeImages(), 100);
             });
         }
     </script>
